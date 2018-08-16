@@ -1,5 +1,5 @@
 import { consoleStyles } from './styles'
-import { defaultOptions, supportedFunctions } from './config'
+import { supportedFunctions, defaultCommands } from './config'
 
 let lastComponentName = ''
 let lastLogFunc = ''
@@ -24,7 +24,7 @@ function unindentAll() {
   indentation = 0
 }
 
-function loggerFactory(logFuncName, background) {
+function loggerFactory(logFuncName, background, enableGrouping) {
   return function (...args) {
     if (env.isDevelopment) { // if dev mode
       let stack
@@ -43,30 +43,43 @@ function loggerFactory(logFuncName, background) {
         caller = '<unknow stack>'
       }
 
-      const headerTemplate = `%c ${componentName} %c ${caller} %c `
+      const headerTemplate = `%c ${componentName} %c ${caller} %c`
+      const styles = [
+        consoleStyles.base + consoleStyles.componentName,
+        consoleStyles.base + consoleStyles.caller + 'background:' + (background || consoleStyles.defaultBackground),
+        'background:transparent;'
+      ]
 
-      if (lastComponentName !== componentName || lastLogFunc !== logFuncName || lastCaller !== caller) {
-        unindent()
+      if (enableGrouping) {
+        if (lastComponentName !== componentName || lastLogFunc !== logFuncName || lastCaller !== caller) {
+          unindent()
 
-        if (args.length > 1) {
           indent(
             headerTemplate + new Date(Date.now()).toLocaleTimeString('en-us', {
               hour12: false,
               timeZoneName: 'short'
             }),
-            consoleStyles.base + consoleStyles.componentName,
-            consoleStyles.base + consoleStyles.caller + 'background:' + (background || consoleStyles.defaultBackground),
-            'background:transparent;'
+            ...styles
           )
         }
+
+        console[logFuncName](...args)
+
+        clearTimeout(groupEndTimeout)
+
+        groupEndTimeout = setTimeout(() => {
+          unindentAll()
+          lastComponentName = ''
+        }, 1000);
+      } else {
+        // if (args.length > 1) {
+        //   console.log(headerTemplate, ...styles)
+        //   console[logFuncName](...args)
+        //   console.log('---------------------')
+        // } else {
+          console[logFuncName](headerTemplate, ...styles, ...args)
+        // }
       }
-
-      clearTimeout(groupEndTimeout)
-
-      groupEndTimeout = setTimeout(() => {
-        unindentAll()
-        lastComponentName = ''
-      }, 1000);
 
       lastComponentName = componentName
       lastLogFunc = logFuncName
@@ -77,9 +90,9 @@ function loggerFactory(logFuncName, background) {
 
 export default function install(
   Vue,
-  options
+  options = {}
 ) {
-  options = Object.assign(defaultOptions, options || {});
+  options.commands = Object.assign(defaultCommands, options || {});
 
-  supportedFunctions.forEach(f => Vue.prototype['$' + f] = loggerFactory(f, options[f]))
+  supportedFunctions.forEach(f => Vue.prototype['$' + f] = loggerFactory(f, options.commands[f], options.enableGrouping))
 }

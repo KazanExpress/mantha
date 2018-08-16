@@ -8,11 +8,12 @@ export const supportedFunctions = [
 ]
 
 export const defaultColors = {
-  log: '#2196f3',
+  info: '#2196f3',
   warn: '#FFC107',
   error: '#e53935'
 }
 
-export const defaultOptions = supportedFunctions.reduce((obj, f) => {
+export const defaultCommands = supportedFunctions.reduce((obj, f) => {
   obj[f] = defaultColors[f] || ''
+  return obj
 }, {});
