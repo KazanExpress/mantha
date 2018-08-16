@@ -4,7 +4,6 @@ export const supportedFunctions = [
   'warn',
   'trace',
   'error',
-  'assert',
 ]
 
 export const defaultColors = {

@@ -29,7 +29,7 @@ function loggerFactory(logFuncName, background, enableGrouping) {
     if (env.isDevelopment) { // if dev mode
       let stack
       let caller
-      let componentName = this.$options.name || (this.$vnode ? this.$vnode.componentOptions.tag : 'Root')
+      let componentName = this ? (this.$options.name || (this.$vnode ? this.$vnode.componentOptions.tag : 'Root')) : 'Script'
       try {
         stack = new Error().stack
         caller = stack
@@ -90,3 +90,9 @@ export default function install(
 
   supportedFunctions.forEach(f => Vue.prototype['$' + f] = loggerFactory(f, options.commands[f], options.enableGrouping))
 }
+
+export const $log = loggerFactory('log', defaultCommands.log)
+export const $info = loggerFactory('info', defaultCommands.info)
+export const $warn = loggerFactory('warn', defaultCommands.warn)
+export const $trace = loggerFactory('trace', defaultCommands.trace)
+export const $error = loggerFactory('error', defaultCommands.error)
