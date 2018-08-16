@@ -11,6 +11,13 @@ module.exports = merge(base, {
     filename: 'app.js',
     publicPath: '/'
   },
+  performance: {
+    hints: "warning"
+  },
+  devServer: {
+    open: false,
+    port: 8080
+  },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({

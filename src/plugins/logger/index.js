@@ -1,21 +1,32 @@
-let lastComponentName = ''
-let groupEndTimeout = null
+import { consoleStyles } from './styles'
+import { defaultOptions, supportedFunctions } from './config'
 
-const consoleStyles = {
-  base: 'padding: 1px; color: #fff; font-weight: 200;',
-  componentName: 'background:#35495e; border-radius: 3px 0 0 3px;',
-  caller: {
-    base: 'border-radius: 0 3px 3px 0;',
-    log: 'background:#41b883;',
-    trace: 'background:#41b883;',
-    warn: 'background:#FFC107; color: rgba(0,0,0,0.9);',
-    error: 'background:#e53935;'
-  }
+let lastComponentName = ''
+let lastLogFunc = ''
+let lastCaller = ''
+let groupEndTimeout = null
+let indentation = 0
+
+function indent(...args) {
+  console.groupCollapsed(...args)
+  indentation++
 }
 
-function loggerFactory(logFuncName) {
+function unindent() {
+  console.groupEnd()
+  indentation--
+}
+
+function unindentAll() {
+  for (let i = 0; i < indentation; i++)
+    console.groupEnd()
+
+  indentation = 0
+}
+
+function loggerFactory(logFuncName, background) {
   return function (...args) {
-    if (true) { // if dev mode
+    if (env.isDevelopment) { // if dev mode
       let stack
       let caller
       let componentName = this.$options.name || (this.$vnode ? this.$vnode.componentOptions.tag : 'Root')
@@ -32,31 +43,43 @@ function loggerFactory(logFuncName) {
         caller = '<unknow stack>'
       }
 
-      if (lastComponentName !== componentName) {
-        console.groupEnd()
-        console.group(`%c ${componentName} %c ${caller} %c`,
-          consoleStyles.base + consoleStyles.componentName,
-          consoleStyles.base + consoleStyles.caller.base + consoleStyles.caller[logFuncName],
-          'background:transparent'
-        )
+      const headerTemplate = `%c ${componentName} %c ${caller} %c `
+
+      if (lastComponentName !== componentName || lastLogFunc !== logFuncName || lastCaller !== caller) {
+        unindent()
+
+        if (args.length > 1) {
+          indent(
+            headerTemplate + new Date(Date.now()).toLocaleTimeString('en-us', {
+              hour12: false,
+              timeZoneName: 'short'
+            }),
+            consoleStyles.base + consoleStyles.componentName,
+            consoleStyles.base + consoleStyles.caller + 'background:' + (background || consoleStyles.defaultBackground),
+            'background:transparent;'
+          )
+        }
       }
 
-      console[logFuncName](...args)
       clearTimeout(groupEndTimeout)
 
       groupEndTimeout = setTimeout(() => {
-        console.groupEnd()
+        unindentAll()
         lastComponentName = ''
       }, 1000);
 
       lastComponentName = componentName
+      lastLogFunc = logFuncName
+      lastCaller = caller
     }
   }
 }
 
-export default function install(Vue, options = {}) {
-  Vue.prototype.$log = loggerFactory('log')
-  Vue.prototype.$warn = loggerFactory('warn')
-  Vue.prototype.$trace = loggerFactory('trace')
-  Vue.prototype.$error = loggerFactory('error')
+export default function install(
+  Vue,
+  options
+) {
+  options = Object.assign(defaultOptions, options || {});
+
+  supportedFunctions.forEach(f => Vue.prototype['$' + f] = loggerFactory(f, options[f]))
 }

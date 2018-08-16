@@ -60,5 +60,6 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  parallelism: 8
 };

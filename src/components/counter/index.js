@@ -18,9 +18,17 @@ export default Vue.extend({
   methods: {
     increment() {
       this.count++;
+      if (this.count > 0)
+        this.$log(this.count)
+      else
+        this.$info(this.count)
     },
     decrement() {
       this.count--;
+      if (this.count > 0)
+        this.$log(this.count)
+      else
+        this.$info(this.count)
     }
   }
 })
