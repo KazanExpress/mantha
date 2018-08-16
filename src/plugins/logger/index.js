@@ -43,7 +43,7 @@ function loggerFactory(logFuncName, background, enableGrouping) {
         caller = '<unknow stack>'
       }
 
-      const headerTemplate = `%c ${componentName} %c ${caller} %c`
+      const headerTemplate = `%c ${componentName} %c ${caller} %c `
       const styles = [
         consoleStyles.base + consoleStyles.componentName,
         consoleStyles.base + consoleStyles.caller + 'background:' + (background || consoleStyles.defaultBackground),
@@ -72,13 +72,7 @@ function loggerFactory(logFuncName, background, enableGrouping) {
           lastComponentName = ''
         }, 1000);
       } else {
-        // if (args.length > 1) {
-        //   console.log(headerTemplate, ...styles)
-        //   console[logFuncName](...args)
-        //   console.log('---------------------')
-        // } else {
-          console[logFuncName](headerTemplate, ...styles, ...args)
-        // }
+        console[logFuncName](headerTemplate, ...styles, ...args)
       }
 
       lastComponentName = componentName
