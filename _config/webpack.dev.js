@@ -3,12 +3,17 @@ const merge = require('webpack-merge');
 const base = require('./webpack.base');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+const path = require('path');
+
+function resolve(dir) {
+  return path.join(__dirname, '..', dir)
+}
 
 module.exports = merge(base, {
   mode: 'development',
   devtool: 'eval-source-map',
   output: {
-    filename: 'app.js',
+    path: resolve('./dev-build'),
     publicPath: '/'
   },
   performance: {

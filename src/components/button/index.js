@@ -1,11 +1,11 @@
 import './styles'
-import template from './view'
+import render from './view'
 
 import Vue from 'vue'
 
-export default Vue.extend({
+export default Vue.extend(render({
   name: 'KeButton',
-  template,
+  // render,
   created() {
     this.baseMethod();
   },
@@ -17,4 +17,4 @@ export default Vue.extend({
       this.$emit('click', e)
     }
   }
-})
+}))

@@ -1,10 +1,10 @@
 import './styles'
-import template from './view'
+import render from './view'
 
 import Vue from 'vue'
 
-export default Vue.extend({
-  template,
+export default Vue.extend(render({
+  // render,
   components: {
     KeButton: component('custom-button'),
     KeCounter: component('counter')
@@ -20,4 +20,4 @@ export default Vue.extend({
       this.$log('let it be mate')
     }
   }
-})
+}))

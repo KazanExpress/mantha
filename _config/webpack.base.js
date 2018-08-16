@@ -15,7 +15,7 @@ module.exports = {
       'themes': resolve('./src/themes'),
       'plugins': resolve('./src/plugins'),
 
-      'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.runtime.esm.js'
     }
   },
   module: {
@@ -46,10 +46,12 @@ module.exports = {
       {
         test: /\.pug$/,
         loaders: [{
-          loader: 'apply-loader'
+          loader: 'vue-template-loader',
+          options: {
+            functional: false
+          }
         }, {
-          loader: 'pug-loader',
-          options: { pretty: true }
+          loader: 'pug-plain-loader'
         }]
       },
       {

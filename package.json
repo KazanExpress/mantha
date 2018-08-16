@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --mode development --config build/webpack.dev.js --open --hot",
-    "build": "webpack --mode production --config build/webpack.dev.js"
+    "dev": "webpack-dev-server --config _config/webpack.dev.js --hot",
+    "dev-build": "webpack --config _config/webpack.dev.js",
+    "build": "webpack --config _config/webpack.prod.js"
   },
   "author": "KazanExpress",
   "license": "MIT",
@@ -26,7 +27,11 @@
     "less-loader": "^4.1.0",
     "pug": "^2.0.3",
     "pug-loader": "^2.4.0",
+    "pug-plain-loader": "^1.0.0",
+    "raw-loader": "^0.5.1",
     "style-loader": "^0.22.1",
+    "vue-template-compiler": "^2.5.17",
+    "vue-template-loader": "^1.0.0",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5",
