@@ -5,7 +5,6 @@ import Vue from 'vue'
 
 export default Vue.extend(render({
   name: 'KeButton',
-  // render,
   created() {
     this.baseMethod();
   },

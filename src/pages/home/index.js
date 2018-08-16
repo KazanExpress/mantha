@@ -4,11 +4,10 @@ import render from './view'
 import Vue from 'vue'
 
 export default Vue.extend(render({
-  // render,
-  components: {
-    KeButton: component('custom-button'),
-    KeCounter: component('counter')
-  },
+  components: useComponents({
+    KeButton: 'custom-button',
+    KeCounter: 'counter'
+  }),
   methods: {
     buttonClickInc () {
       this.$refs.counter.increment();
