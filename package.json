@@ -1,0 +1,43 @@
+{
+  "name": "ke-frontend-workspace-demo",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --mode development --config build/webpack.dev.js --open --hot",
+    "build": "webpack --mode production"
+  },
+  "author": "KazanExpress",
+  "license": "MIT",
+  "devDependencies": {
+    "apply-loader": "^2.0.0",
+    "autoprefixer": "^9.1.1",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^1.0.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.11",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "less": "^3.8.1",
+    "less-loader": "^4.1.0",
+    "pug": "^2.0.3",
+    "pug-loader": "^2.4.0",
+    "style-loader": "^0.22.1",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5",
+    "webpack-merge": "^4.1.4"
+  },
+  "dependencies": {
+    "vue": "^2.5.17"
+  },
+  "babel": {
+    "plugins": [
+      "syntax-dynamic-import"
+    ]
+  }
+}

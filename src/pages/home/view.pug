@@ -1,0 +1,6 @@
+.home-page
+  h1 Hello, my dear.
+  h2 Please, hover on the button below.
+  button(@click="otherButtonClick") а я кнопка с home
+  ke-button.pulsating(@click="buttonClickInc", @contextmenu.native.prevent="buttonClickDec", title="Left click to increment, right click to decrement!")
+    ke-counter(:start="-5", ref="counter")
