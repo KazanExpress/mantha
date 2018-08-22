@@ -1,12 +1,19 @@
-var path = require('path')
+import path = require('path');
+import { Configuration } from 'webpack';
 
-function resolve(dir) {
-  return path.join(__dirname, '..', dir)
+function resolve(dir: string) {
+  return path.join(__dirname, '..', dir);
 }
 
-module.exports = {
+export default (mode: 'development' | 'production'): Configuration => ({
+  mode,
+  output: {
+    path: resolve('./build/' + mode),
+    publicPath: '/'
+  },
+
   resolve: {
-    extensions: ['.js', '.pug', '.less', '.json'],
+    extensions: ['.ts', '.js', '.pug', '.less', '.json'],
     alias: {
       '@': resolve('/src/'),
       'views': resolve('./src/views'),
@@ -18,6 +25,7 @@ module.exports = {
       'vue$': 'vue/dist/vue.runtime.esm.js'
     }
   },
+
   module: {
     rules: [
       {
@@ -37,6 +45,15 @@ module.exports = {
         test: /\.html$/,
         loader: 'html-loader',
         options: { minimize: true }
+      },
+      {
+        test: /\.d\.ts$/,
+        loader: 'ignore-loader'
+      },
+      {
+        test: /\.ts$/,
+        exclude: [/(node_modules)|(\.d\.ts)/],
+        loader: 'ts-loader'
       },
       {
         test: /\.js?$/,
@@ -63,5 +80,6 @@ module.exports = {
       }
     ]
   },
+
   parallelism: 8
-};
+});

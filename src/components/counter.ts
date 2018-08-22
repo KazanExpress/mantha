@@ -1,9 +1,6 @@
-import Vue from 'vue'
+import Vue from 'vue';
 
-export default Vue.extend({
-  render(h) {
-    return h('span', ['Count is ' + this.count])
-  },
+const counter = Vue.extend({
   props: {
     start: {
       type: Number,
@@ -19,16 +16,21 @@ export default Vue.extend({
     increment() {
       this.count++;
       if (this.count > 0)
-        this.$log(this.count)
+        console.log(this.count);
       else
-        this.$info(this.count)
+        console.info(this.count);
     },
     decrement() {
       this.count--;
       if (this.count > 0)
-        this.$log(this.count)
+        console.log(this.count);
       else
-        this.$info(this.count)
+        console.info(this.count);
     }
+  },
+  render(h) {
+    return h('span', 'Count');
   }
-})
+});
+
+export default counter;
