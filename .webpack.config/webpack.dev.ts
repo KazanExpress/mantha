@@ -12,7 +12,9 @@ export default merge(base('development'), {
     open: false,
     noInfo: true,
     hot: true,
-    hotOnly: true
+    hotOnly: true,
+
+    historyApiFallback: true
     // port: 8080
   },
 
