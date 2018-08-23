@@ -1,6 +1,4 @@
 import render = require('./view')
 import Vue from 'vue';
 
-export default render(Vue.extend({
-
-}))
+export default render(Vue)
