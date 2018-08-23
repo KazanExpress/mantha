@@ -1,14 +1,16 @@
-import './styles'
-import render = require('./view')
+import './styles';
+import render = require('./view');
 
-import KeCounter from 'components/counter'
-import KeButton from 'components/custom-button'
+import KeCounter from 'components/counter';
+import KeButton from 'components/custom-button';
 
-import Vue from 'vue'
+import Vue from 'vue';
+import { RouteConfig } from 'vue-router';
 
 export default render(Vue.withRefs<{
   counter: InstanceType<typeof KeCounter>
 }>().extend({
+  name: 'home',
   components: {
     KeButton,
     KeCounter
@@ -24,5 +26,8 @@ export default render(Vue.withRefs<{
       console.log('let it be mate')
     }
   }
-}))
+}));
 
+export const routeConfig: Partial<RouteConfig> = {
+  name: 'home1'
+}

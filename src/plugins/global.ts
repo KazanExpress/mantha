@@ -22,3 +22,4 @@ class Env extends String {
 };
 
 global.env = new Env();
+

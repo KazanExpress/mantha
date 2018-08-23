@@ -13,7 +13,7 @@ export default render(Vue.extend({
   }),
   methods: {
     baseMethod () {
-      console.warn('BASE METHOD SPEAKS TO YOU: ', this)
+      console.warn('BASE METHOD SPEAKS TO YOU:', this.test)
     },
     onClick (e) {
       this.$emit('click', e)

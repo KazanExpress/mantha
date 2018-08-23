@@ -1,6 +1,8 @@
+import render = require('./view');
+
 import Vue from 'vue';
 
-const counter = Vue.extend({
+export default render(Vue.extend({
   props: {
     start: {
       type: Number,
@@ -27,10 +29,5 @@ const counter = Vue.extend({
       else
         console.info(this.count);
     }
-  },
-  render(h) {
-    return h('span', 'Count');
   }
-});
-
-export default counter;
+}));
