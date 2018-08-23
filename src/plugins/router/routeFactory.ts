@@ -27,20 +27,10 @@ export function baseRouteFactory(componentImportFunction: (path: string) => Asyn
     const routePath: string = args.length > 2 ? args[1] : typeof args[1] === 'string' ? args[1] : (args[1].path || args[0]);
     const options: Partial<RouteConfig> | RouteConfig | Array<RouteConfig> = args.length > 2 ? args[2] : args[1];
 
-    let route: RouteConfig = { path: routePath, name };
+    let route: RouteConfig = { path: routePath };
 
     if (typeof componentPathOrObj === 'string') {
-      const asyncComponent = () => {
-        return new Promise(resolve => {
-          const importPromise = componentImportFunction(componentPathOrObj)(resolve);
-          importPromise.then(r => {
-            route = Object.assign(route, (r as EsModuleComponent).routeConfig);
-
-            resolve(importPromise);
-          });
-        });
-      }
-
+      const asyncComponent = componentImportFunction(componentPathOrObj)
       route.component = asyncComponent;
     } else {
       route.component = componentPathOrObj;
@@ -51,7 +41,6 @@ export function baseRouteFactory(componentImportFunction: (path: string) => Asyn
     } else if (options) {
       route.children = options;
     }
-
 
     return route;
   }

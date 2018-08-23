@@ -12,7 +12,7 @@ export const options: RouterOptions = {
   fallback: false,
 	scrollBehavior(to, from, savedPosition) {
     if (to.meta.scrollBehavior) {
-      return to.meta.scrollBehavior();
+      return to.meta.scrollBehavior(to, from, savedPosition);
     }
 
 		if (to.hash) {

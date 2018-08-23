@@ -1,4 +1,4 @@
-import Vue, { VueConstructor } from "vue";
+import Vue, { VueConstructor } from 'vue';
 
 declare module 'vue/types/vue' {
   type BaseRefs = {
