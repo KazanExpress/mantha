@@ -9,9 +9,8 @@ type ComponentImportPromiseMap = {
 }
 
 declare const importComponent: (name: string) => ComponentImportPromise;
-declare const importPage: (name: string) => ComponentImportPromise
-declare const useComponents: (componentsMap: { [name: string]: string }) => ComponentImportPromiseMap
-declare const getSuper: <T>(component: T, propName: keyof InstanceType<T>) => any;
+declare const importPage: (name: string) => ComponentImportPromise;
+declare const useComponents: (componentsMap: { [name: string]: string }) => ComponentImportPromiseMap;
 declare const env: Env
 
 declare module '.*' {
