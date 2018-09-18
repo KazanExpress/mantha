@@ -1,4 +1,4 @@
-import Router, { RouterOptions, Route } from 'vue-router';
+import Router, { RouterOptions } from 'vue-router';
 
 import { routes as routeMap } from 'config/router';
 import { routerConfig, afterEach, beforeEach } from 'config/router';
@@ -9,18 +9,18 @@ import { routesFromMap } from './fromMap';
 export const options: RouterOptions = {
   ...routerConfig,
   routes: routesFromMap(routeMap),
-	scrollBehavior(to, from, savedPosition) {
+  scrollBehavior(to, from, savedPosition) {
     if (to.meta.scrollBehavior) {
       return to.meta.scrollBehavior(to, from, savedPosition);
     }
 
-		if (to.hash) {
+    if (to.hash) {
       return { selector: to.hash };
     }
 
     return savedPosition;
   }
-}
+};
 
 // Reload protection
 export function guard(router: Router): Router {

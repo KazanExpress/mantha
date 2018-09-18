@@ -5,7 +5,7 @@ import base from './webpack.base';
 
 export default merge(base('production'), {
   performance: {
-    hints: "warning"
+    hints: 'warning'
   },
 
   plugins: [

@@ -16,4 +16,4 @@ export const routes = {
     name: '404',
     component: importPage('404')
   }
-} as import('@/plugins/router/fromMap').RouteMap;
+} as import('@/plugins/router/fromMap').IRouteMap;

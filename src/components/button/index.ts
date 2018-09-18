@@ -1,7 +1,7 @@
-import './styles'
-import render = require('./view')
+import './styles';
+import render = require('./view');
 
-import Vue from 'vue'
+import Vue from 'vue';
 
 export default render(Vue.extend({
   name: 'KeButton',
@@ -13,10 +13,10 @@ export default render(Vue.extend({
   }),
   methods: {
     baseMethod () {
-      console.warn('BASE METHOD SPEAKS TO YOU:', this.test)
+      console.warn('BASE METHOD SPEAKS TO YOU:', this.test);
     },
     onClick (e) {
-      this.$emit('click', e)
+      this.$emit('click', e);
     }
   }
 }));

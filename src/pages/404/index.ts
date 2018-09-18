@@ -1,4 +1,4 @@
-import render = require('./view')
+import render = require('./view');
 import Vue from 'vue';
 
-export default render(Vue)
+export default render(Vue);

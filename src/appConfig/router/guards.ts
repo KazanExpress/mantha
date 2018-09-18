@@ -21,4 +21,4 @@ export const beforeEach = (router: VueRouter) => (
 
 export const afterEach = (router: VueRouter) => (to: Route, from: Route) => {
 
-}
+};

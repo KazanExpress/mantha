@@ -8,7 +8,7 @@ import Vue from 'vue';
 import { RouteConfig } from 'vue-router';
 
 export default render(Vue.withRefs<{
-  counter: InstanceType<typeof KeCounter>
+  counter: InstanceType<typeof KeCounter>;
 }>().extend({
   name: 'home',
   components: {
@@ -23,11 +23,7 @@ export default render(Vue.withRefs<{
       this.$refs.counter.decrement();
     },
     otherButtonClick () {
-      console.log('let it be mate')
+      console.log('let it be mate');
     }
   }
 }));
-
-export const routeConfig: Partial<RouteConfig> = {
-  name: 'home1'
-}
