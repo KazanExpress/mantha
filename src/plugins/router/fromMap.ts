@@ -1,9 +1,13 @@
-import { RouteConfig } from 'vue-router';
+import { RouteConfig, PositionResult, Position, Route } from 'vue-router/types/router';
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
-interface RouteMapConfig extends Omit<RouteConfig, 'path' | 'children'> {
+export interface RouteMapConfig extends Omit<RouteConfig, 'path' | 'children'> {
   children?: RouteMap
+  meta?: {
+    [key: string]: any;
+    scrollBehaviour?: (to: Route, from: Route, savedPosition: Position) => PositionResult | Promise<PositionResult>
+  }
 }
 
 export interface RouteMap {

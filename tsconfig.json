@@ -40,6 +40,7 @@
       "pages": ["./src/pages"],
       "themes": ["./src/themes"],
       "plugins": ["./src/plugins"],
+      "config/*": ["./src/appConfig/*"],
     },
     "typeRoots": [
       "./src/types",

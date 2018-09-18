@@ -11,7 +11,9 @@ type ComponentImportPromiseMap = {
 declare const importComponent: (name: string) => ComponentImportPromise;
 declare const importPage: (name: string) => ComponentImportPromise;
 declare const useComponents: (componentsMap: { [name: string]: string }) => ComponentImportPromiseMap;
-declare const env: Env
+declare const env: String & {
+  isDevelopment: boolean
+};
 
 declare module '.*' {
   const render: <T>(arg: T) => T

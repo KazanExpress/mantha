@@ -21,6 +21,7 @@ export default (mode: 'development' | 'production'): Configuration => ({
       'pages': resolve('./src/pages'),
       'themes': resolve('./src/themes'),
       'plugins': resolve('./src/plugins'),
+      'config': resolve('./src/appConfig'),
 
       'vue$': 'vue/dist/vue.runtime.esm.js'
     }

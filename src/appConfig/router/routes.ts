@@ -1,9 +1,10 @@
-import { routesFromMap } from './fromMap';
+const router_view = { component: { render: h => h('router-view') } };
 
-export const routes = routesFromMap({
+export const routes = {
   '/': {
     name: 'root',
-    component: importPage('home'),
+    redirect: 'home',
+    component: router_view,
     children: {
       'home': {
         name: 'home',
@@ -15,4 +16,4 @@ export const routes = routesFromMap({
     name: '404',
     component: importPage('404')
   }
-})
+} as import('@/plugins/router/fromMap').RouteMap;

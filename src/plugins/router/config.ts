@@ -1,15 +1,14 @@
-import Router, { RouterOptions, Route } from 'vue-router'
+import Router, { RouterOptions, Route } from 'vue-router';
 
-import { routes } from './routes'
+import { routes as routeMap } from 'config/router';
+import { routerConfig, afterEach, beforeEach } from 'config/router';
 
-/// TODO - move it to outer configs
+import { routesFromMap } from './fromMap';
+
+
 export const options: RouterOptions = {
-  routes,
-  base: '/',
-	mode: 'history',
-	linkActiveClass: 'active-link',
-	linkExactActiveClass: 'exact-active-link',
-  fallback: false,
+  ...routerConfig,
+  routes: routesFromMap(routeMap),
 	scrollBehavior(to, from, savedPosition) {
     if (to.meta.scrollBehavior) {
       return to.meta.scrollBehavior(to, from, savedPosition);
@@ -25,15 +24,9 @@ export const options: RouterOptions = {
 
 // Reload protection
 export function guard(router: Router): Router {
-  router.beforeEach((to, from, next) => {
-    return next();
-  });
+  router.beforeEach(beforeEach(router));
 
-  router.afterEach((to, from) => {
-  });
+  router.afterEach(afterEach(router));
 
   return router;
 }
-
-export const going = (route: Route, path: string, startsWith?: string) =>
-  route.fullPath === path || route.path === path || (startsWith && route.fullPath.startsWith(startsWith));
