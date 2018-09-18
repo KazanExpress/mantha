@@ -1,13 +1,17 @@
 import Router, { RouterOptions } from 'vue-router';
 
-import { routes as routeMap } from 'config/router';
-import { routerConfig, afterEach, beforeEach } from 'config/router';
+import { routes as routeMap } from '@/routes';
+import { afterEach, beforeEach } from './guards';
 
 import { routesFromMap } from './fromMap';
 
 
 export const options: RouterOptions = {
-  ...routerConfig,
+  base: '/',
+  mode: 'history',
+  linkActiveClass: 'active-link',
+  linkExactActiveClass: 'exact-active-link',
+  fallback: false,
   routes: routesFromMap(routeMap),
   scrollBehavior(to, from, savedPosition) {
     if (to.meta.scrollBehavior) {

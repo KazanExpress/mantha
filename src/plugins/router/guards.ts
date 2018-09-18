@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import VueRouter, { Route, RawLocation } from 'vue-router';
 
+type Next = (to?: RawLocation | false | ((vm: Vue) => any) | void) => void;
+
 /**
  * Determine if user is going to %path%
  *
@@ -11,11 +13,7 @@ import VueRouter, { Route, RawLocation } from 'vue-router';
 export const going = (route: Route, path: string, startsWith?: string) =>
   route.fullPath === path || route.path === path || (startsWith && route.fullPath.startsWith(startsWith));
 
-export const beforeEach = (router: VueRouter) => (
-  to: Route,
-  from: Route,
-  next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void
-) => {
+export const beforeEach = (router: VueRouter) => (to: Route, from: Route, next: Next) => {
   return next();
 };
 

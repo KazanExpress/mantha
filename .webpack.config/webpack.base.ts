@@ -5,6 +5,15 @@ function resolve(dir: string) {
   return path.join(__dirname, '..', dir);
 }
 
+// tslint:disable-next-line:no-var-requires
+var paths = require('../src/tsconfig.json').compilerOptions.paths;
+
+paths = Object.keys(paths).reduce((obj, key) => {
+  obj[key.replace('/*', '')] = resolve('./src/' + paths[key][0].replace('/*', '').replace('./', ''));
+
+  return obj;
+}, {});
+
 export default (mode: 'development' | 'production'): Configuration => ({
   mode,
   output: {
@@ -15,19 +24,14 @@ export default (mode: 'development' | 'production'): Configuration => ({
   resolve: {
     extensions: ['.ts', '.js', '.pug', '.less', '.json'],
     alias: {
-      '@': resolve('/src/'),
-      'views': resolve('./src/views'),
-      'components': resolve('./src/components'),
-      'pages': resolve('./src/pages'),
-      'themes': resolve('./src/themes'),
-      'plugins': resolve('./src/plugins'),
-      'config': resolve('./src/appConfig'),
+      ...paths,
 
       'vue$': 'vue/dist/vue.runtime.esm.js'
     }
   },
 
   module: {
+    noParse: /.*tsconfig\.json$/,
     rules: [
       {
         test: /\.less$/,
@@ -48,7 +52,7 @@ export default (mode: 'development' | 'production'): Configuration => ({
         options: { minimize: true }
       },
       {
-        test: /\.d\.ts$/,
+        test: [/\.d\.ts$/, /tsconfig\.json/],
         loader: 'ignore-loader'
       },
       {
