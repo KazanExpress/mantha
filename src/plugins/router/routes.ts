@@ -1,8 +1,18 @@
-import { pageRoute } from './routeFactory';
+import { routesFromMap } from './fromMap';
 
-/// TODO - move it to outer configs
-export const routes = [
-  pageRoute('home', '/', { name: 'root' }),
-  pageRoute('home', '/home', { name: 'home' }),
-  pageRoute('404', '*', { name: '404' })
-]
+export const routes = routesFromMap({
+  '/': {
+    name: 'root',
+    component: importPage('home'),
+    children: {
+      'home': {
+        name: 'home',
+        component: importPage('home')
+      }
+    }
+  },
+  '*': {
+    name: '404',
+    component: importPage('404')
+  }
+})
