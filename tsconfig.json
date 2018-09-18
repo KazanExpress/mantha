@@ -47,12 +47,13 @@
     ],
     "types": [
       "@types/node",
+      "@types/jest",
       "@types/webpack",
       "@types/webpack-dev-server",
     ]
   },
   "include": [
-    "./src"
+    "./src",
   ],
   "exclude": [
     "node_modules"
