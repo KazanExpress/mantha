@@ -47,7 +47,7 @@
     ],
     "types": [
       "@types/node",
-      "@types/jest",
+      // "@types/jest",
       "@types/webpack",
       "@types/webpack-dev-server",
     ]
