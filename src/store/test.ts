@@ -1,5 +1,6 @@
-export default {
+export const test = {
   namespaced: true,
-  state: {},
-
+  state: {
+    test: 'test'
+  },
 } as import('vuex').Module<any, any>;

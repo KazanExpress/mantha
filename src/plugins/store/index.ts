@@ -3,14 +3,10 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-// function importAll(r) {
-//   r.keys().forEach(r);
-// }
+import * as modules from '@/store';
 
-// const modules = importAll((require as any).context('@/store', true, /\.js$/));
-
-// console.log(modules);
+console.log(modules);
 
 export default new Vuex.Store({
-  // modules
+  modules
 });
