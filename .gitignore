@@ -1,4 +1,8 @@
+.nyc_output
 .DS_Store
+*.log
+.vscode
+.idea
 thumbs.db
 
 # Editor directories and files
@@ -9,7 +13,11 @@ thumbs.db
 *.njsproj
 *.sln
 
-node_modules/
-
 npm-debug.log
 yarn-error.log
+
+node_modules
+coverage
+compiled
+.awcache
+.rpt2_cache
