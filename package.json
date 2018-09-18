@@ -1,5 +1,5 @@
 {
-  "name": "ke-frontend-workspace-demo",
+  "name": "mantha",
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
@@ -26,6 +26,7 @@
     "autoprefixer": "^9.1.1",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "babel-plugin-import-directory": "^1.0.3",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-preset-env": "^1.6.1",
     "css-loader": "^1.0.0",
@@ -55,12 +56,15 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
+    "puex": "^0.5.2",
     "vue": "^2.5.17",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   },
   "babel": {
     "plugins": [
-      "syntax-dynamic-import"
+      "syntax-dynamic-import",
+      "import-directory"
     ]
   },
   "jest": {
