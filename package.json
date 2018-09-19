@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "webpack-dev-server --config .webpack.config/webpack.dev.server.ts",
     "build:dev": "webpack --config .webpack.config/webpack.dev.ts",
-    "build": "webpack --config .webpack.config/webpack.prod.ts",
+    "build:module": "webpack --config .webpack.config/webpack.module.ts",
+    "build:prod": "webpack --config .webpack.config/webpack.prod.ts",
+    "build": "npm-run-parallel build:prod build:dev build:module",
     "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "test": "jest",
     "test:report": "npm run test -- --verbose",
@@ -42,6 +44,7 @@
     "jest": "^23.6.0",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
+    "npm-run-parallel": "^0.6.0",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "raw-loader": "^0.5.1",
