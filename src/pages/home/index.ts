@@ -8,8 +8,9 @@ export default render(Vue.withRefs<{
 }>().extend({
   name: 'home',
   components: useComponents({
-    KeButton: 'components/custom-button',
-    KeCounter: 'components/counter'
+    KeButton: 'custom-button',
+    JustButton: 'button',
+    KeCounter: 'counter'
   }),
   methods: {
     buttonClickInc () {

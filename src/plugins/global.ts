@@ -1,15 +1,17 @@
-declare var global: any;
-
 function importFactory(type: string) {
   return function (name: string) {
-    return () => import('@/' + type + '/' + name);
+    return () => import(
+      /* webpackChunkName: "[request]" */
+      /* webpackMode: "lazy" */
+      /* webpackExclude: /.*((le|c)ss|\.html|\.pug|tsconfig\.json|\.d\.ts)$/ */
+      '@/' + type + '/' + name);
   };
 }
 
-global.importComponent = importFactory('components');
-global.importPage = importFactory('pages');
-global.useComponents = componentsMap => Object.keys(componentsMap)
-  .reduce((obj, name) => ((obj[name] = global.importComponent(componentsMap[name])), obj), {} as ComponentImportPromiseMap);
+window.importComponent = importFactory('components');
+window.importPage = importFactory('pages');
+window.useComponents = componentsMap => Object.keys(componentsMap)
+  .reduce((obj, name) => ((obj[name] = importComponent(componentsMap[name])), obj), {} as ComponentImportPromiseMap);
 
 class Env extends String {
   constructor() {
@@ -21,5 +23,5 @@ class Env extends String {
   }
 }
 
-global.env = new Env();
+window.env = new Env();
 

@@ -2,6 +2,7 @@ import { join } from 'path';
 import { Configuration } from 'webpack';
 import * as cleanWebpackPlugin from 'clean-webpack-plugin';
 import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin/lib';
+import * as webpack from 'webpack';
 
 function resolve(dir: string) {
   return join(__dirname, '..', dir);
@@ -20,9 +21,7 @@ export default (mode: 'development' | 'production'): Configuration => ({
   mode,
   output: {
     path: resolve('./build/' + mode),
-    publicPath: '/',
-    filename: '[name].js',
-    chunkFilename: '[name].js',
+    publicPath: '/'
   },
 
   resolve: {
@@ -99,11 +98,24 @@ export default (mode: 'development' | 'production'): Configuration => ({
     flagIncludedChunks: true,
     removeAvailableModules: true,
     removeEmptyChunks: true,
-    splitChunks: {
-      name: true,
-
+    runtimeChunk: {
+      name: 'async-importer'
     },
-    runtimeChunk: true
+    splitChunks: {
+      chunks: 'async',
+      cacheGroups: {
+        vendor: {
+          test: /node_modules/,
+          name: 'vendor',
+          chunks: 'all'
+        },
+        theme: {
+          test: /themes/,
+          name: 'theme',
+          chunks: 'all'
+        }
+      }
+    }
   },
 
   parallelism: 8,
@@ -112,6 +124,10 @@ export default (mode: 'development' | 'production'): Configuration => ({
     new cleanWebpackPlugin(resolve('./build/' + mode), {
       allowExternal: true
     }),
-    new ForkTsCheckerWebpackPlugin()
+    new ForkTsCheckerWebpackPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(mode),
+      'process.env.ENV': JSON.stringify(mode),
+    })
   ]
 });

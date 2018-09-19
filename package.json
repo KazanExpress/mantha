@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --config .webpack.config/webpack.dev.ts",
+    "dev": "webpack-dev-server --config .webpack.config/webpack.dev.server.ts",
     "build:dev": "webpack --config .webpack.config/webpack.dev.ts",
     "build": "webpack --config .webpack.config/webpack.prod.ts",
     "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
