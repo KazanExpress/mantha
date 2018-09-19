@@ -1,6 +1,7 @@
 import { join } from 'path';
 import { Configuration } from 'webpack';
 import * as cleanWebpackPlugin from 'clean-webpack-plugin';
+import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin/lib';
 
 function resolve(dir: string) {
   return join(__dirname, '..', dir);
@@ -63,7 +64,8 @@ export default (mode: 'development' | 'production'): Configuration => ({
         exclude: [/(node_modules)|(\.d\.ts)/],
         loader: 'ts-loader',
         options: {
-          configFile: resolve('./src/tsconfig.json')
+          configFile: resolve('./src/tsconfig.json'),
+          transpileOnly: true
         }
       },
       {
@@ -109,6 +111,7 @@ export default (mode: 'development' | 'production'): Configuration => ({
   plugins: [
     new cleanWebpackPlugin(resolve('./build/' + mode), {
       allowExternal: true
-    })
+    }),
+    new ForkTsCheckerWebpackPlugin()
   ]
 });
