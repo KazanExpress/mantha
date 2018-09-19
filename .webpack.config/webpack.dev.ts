@@ -1,7 +1,7 @@
-import webpack = require('webpack');
-import HtmlWebpackPlugin = require('html-webpack-plugin');
-import FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-import merge = require('webpack-merge');
+import * as webpack from 'webpack';
+import * as HtmlWebpackPlugin from 'html-webpack-plugin';
+import * as FriendlyErrorsPlugin from 'friendly-errors-webpack-plugin';
+import * as merge from 'webpack-merge';
 
 import base from './webpack.base';
 

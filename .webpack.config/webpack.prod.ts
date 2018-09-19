@@ -1,5 +1,5 @@
-import merge = require('webpack-merge');
-import HtmlWebpackPlugin = require('html-webpack-plugin');
+import * as merge from 'webpack-merge';
+import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 
 import base from './webpack.base';
 

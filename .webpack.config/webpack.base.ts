@@ -1,8 +1,8 @@
-import path = require('path');
+import { join } from 'path';
 import { Configuration } from 'webpack';
 
 function resolve(dir: string) {
-  return path.join(__dirname, '..', dir);
+  return join(__dirname, '..', dir);
 }
 
 // tslint:disable-next-line:no-var-requires
@@ -58,7 +58,10 @@ export default (mode: 'development' | 'production'): Configuration => ({
       {
         test: /\.ts$/,
         exclude: [/(node_modules)|(\.d\.ts)/],
-        loader: 'ts-loader'
+        loader: 'ts-loader',
+        options: {
+          configFile: resolve('./src/tsconfig.json')
+        }
       },
       {
         test: /\.js?$/,

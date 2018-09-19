@@ -1,5 +1,5 @@
 import './styles';
-import render = require('./view');
+import render from './view';
 
 import KeCounter from 'components/counter';
 import KeButton from 'components/custom-button';

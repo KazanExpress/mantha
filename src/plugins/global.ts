@@ -1,9 +1,9 @@
 declare var global: any;
 
-export function importFactory(type: string) {
-  return function(name: string) {
-    return () => import('@/' + type + '/' + name)
-  }
+function importFactory(type: string) {
+  return function (name: string) {
+    return () => import('@/' + type + '/' + name);
+  };
 }
 
 global.importComponent = importFactory('components');
@@ -13,13 +13,13 @@ global.useComponents = componentsMap => Object.keys(componentsMap)
 
 class Env extends String {
   constructor() {
-    super(process.env.NODE_ENV)
+    super(process.env.NODE_ENV);
   }
 
   get isDevelopment() {
-    return process.env.NODE_ENV === 'development'
+    return process.env.NODE_ENV === 'development';
   }
-};
+}
 
 global.env = new Env();
 

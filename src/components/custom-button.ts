@@ -1,4 +1,4 @@
-import BaseButton from 'components/button'
+import BaseButton from 'components/button';
 import Vue from 'vue';
 
 export default BaseButton.extend({
@@ -9,4 +9,4 @@ export default BaseButton.extend({
       this.$super<typeof BaseButton>('onClick', e);
     }
   }
-})
+});
