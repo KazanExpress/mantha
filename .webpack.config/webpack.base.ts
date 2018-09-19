@@ -1,5 +1,6 @@
 import { join } from 'path';
 import { Configuration } from 'webpack';
+import * as cleanWebpackPlugin from 'clean-webpack-plugin';
 
 function resolve(dir: string) {
   return join(__dirname, '..', dir);
@@ -18,7 +19,9 @@ export default (mode: 'development' | 'production'): Configuration => ({
   mode,
   output: {
     path: resolve('./build/' + mode),
-    publicPath: '/'
+    publicPath: '/',
+    filename: '[name].js',
+    chunkFilename: '[name].js',
   },
 
   resolve: {
@@ -89,5 +92,23 @@ export default (mode: 'development' | 'production'): Configuration => ({
     ]
   },
 
-  parallelism: 8
+  optimization: {
+    mergeDuplicateChunks: true,
+    flagIncludedChunks: true,
+    removeAvailableModules: true,
+    removeEmptyChunks: true,
+    splitChunks: {
+      name: true,
+
+    },
+    runtimeChunk: true
+  },
+
+  parallelism: 8,
+
+  plugins: [
+    new cleanWebpackPlugin(resolve('./build/' + mode), {
+      allowExternal: true
+    })
+  ]
 });

@@ -22,7 +22,13 @@ export function routesFromMap(map: IRouteMap): RouteConfig[] {
     const route = map[path] as any;
 
     if (typeof route === 'function') {
-      routes.push({ component: route, path });
+      const rt = { component: route, path } as any;
+
+      if (/^\w+$/g.test(path)) {
+        rt.name = path;
+      }
+
+      routes.push(rt);
       continue;
     }
 

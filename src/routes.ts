@@ -1,4 +1,4 @@
-const component = { render: h => h('router-view') };
+const component = { render: h => h('router-view'), name: '-' };
 
 export const routes = {
   '/': {
