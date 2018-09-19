@@ -1,19 +1,16 @@
 import './styles';
 import render from './view';
 
-import KeCounter from 'components/counter';
-import KeButton from 'components/custom-button';
-
 import Vue from 'vue';
 
 export default render(Vue.withRefs<{
-  counter: InstanceType<typeof KeCounter>;
+  counter: typeof import('components/counter').default;
 }>().extend({
   name: 'home',
-  components: {
-    KeButton,
-    KeCounter
-  },
+  components: useComponents({
+    KeButton: 'components/custom-button',
+    KeCounter: 'components/counter'
+  }),
   methods: {
     buttonClickInc () {
       this.$refs.counter.increment();

@@ -2,13 +2,15 @@ import Vue, { VueConstructor } from 'vue';
 
 declare module 'vue/types/vue' {
   type BaseRefs = {
-    [name: string]: Element | Vue | Element[] | Vue[];
+    [name: string]: Element | VueConstructor | Element[] | VueConstructor[];
   };
 
   // tslint:disable-next-line:interface-name
   interface VueConstructor<V extends Vue = Vue> {
     withRefs<Refs extends BaseRefs>(): VueConstructor<V & {
-      $refs: Refs;
+      $refs: {
+        [key in keyof Refs]: Refs[key] extends Array<any> ? Refs[key] : Refs[key] extends VueConstructor ? InstanceType<Refs[key]> : Refs[key]
+      };
     }>;
   }
 
