@@ -115,17 +115,21 @@ export default (mode: 'development' | 'production'): Configuration => ({
       name: 'async-importer'
     },
     splitChunks: {
-      chunks: 'async',
+        maxInitialRequests: 20,
+        maxAsyncRequests: 20,
       cacheGroups: {
         vendor: {
           test: /node_modules/,
-          name: 'vendor',
-          chunks: 'all'
+            chunks: 'all',
+            enforce: true,
+            reuseExistingChunk: true
         },
-        theme: {
-          test: /themes/,
-          name: 'theme',
-          chunks: 'all'
+          main: {
+            test: /.*src(\/|\\)(pages|components)(\/|\\).*/,
+            chunks: 'all',
+            enforce: true,
+            reuseExistingChunk: true,
+            name: true
         }
       }
     }
