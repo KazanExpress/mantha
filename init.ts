@@ -44,13 +44,13 @@ const _promptSchemaRepoName = {
   properties: {
     repository: {
       description: colors.cyan(
-        'What shall be your remote repository? (provide https or ssh url)'
+        'What shall be your remote repository? (provide https or ssh url or leave empty if not needed)'
       ),
-      pattern: /^(https:\/\/|git@)\w+\.\w+\/.*\.git$/,
+      pattern: /^((https:\/\/|git@)\w+\.\w+\/.*\.git)?$/,
       type: 'string',
       required: true,
       message:
-        'provide https or ssh repository url'
+        'provide empty string or https/ssh repository url'
     }
   }
 };
@@ -141,7 +141,17 @@ function applicationNameSuggestedAccept() {
     }
 
     if (res.useSuggestedName.toLowerCase().charAt(0) === 'y') {
-      setupApplication(applicationNameSuggested(), '');
+      _prompt.get(_promptSchemaRepoName, (repoErr: any, repoRes: any) => {
+        if (repoErr) {
+          console.log(colors.red('Sorry, there was an error building the workspace :('));
+          removeItems();
+          process.exit(1);
+
+          return;
+        }
+
+        setupApplication(applicationNameSuggested(), repoRes.repository);
+      });
     } else {
       applicationNameCreate();
     }
