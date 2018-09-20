@@ -158,7 +158,7 @@ function applicationNameSuggestedAccept() {
  * lowercased and returned
  */
 function applicationNameSuggested() {
-  return basename(resolve(__dirname, '..'))
+  return basename(resolve(__dirname))
     .replace(/[^\w\d]|_/g, '-')
     .replace(/^-+|-+$/g, '')
     .toLowerCase();
