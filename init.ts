@@ -7,7 +7,7 @@ import * as _prompt from 'prompt';
 import * as colors from 'colors';
 import { mv, rm, which, exec } from 'shelljs';
 import replace from 'replace-in-file';
-import path from 'path';
+import { basename, resolve } from 'path';
 import { readFileSync, writeFileSync } from 'fs';
 import { fork } from 'child_process';
 
@@ -158,8 +158,7 @@ function applicationNameSuggestedAccept() {
  * lowercased and returned
  */
 function applicationNameSuggested() {
-  return path
-    .basename(path.resolve(__dirname, '..'))
+  return basename(resolve(__dirname, '..'))
     .replace(/[^\w\d]|_/g, '-')
     .replace(/^-+|-+$/g, '')
     .toLowerCase();
@@ -212,7 +211,7 @@ function removeItems() {
   // The directories and files are combined here, to simplify the function,
   // as the 'rm' command checks the item type before attempting to remove it
   let rmItems = rmDirs.concat(rmFiles);
-  rm('-rf', rmItems.map(f => path.resolve(__dirname, '..', f)));
+  rm('-rf', rmItems.map(f => resolve(__dirname, '..', f)));
   console.log(colors.red(rmItems.join('\n')));
 
   console.log('\n');
@@ -224,7 +223,7 @@ function removeItems() {
 function modifyContents(applicationName: string, username: string, usermail: string, repo: string) {
   console.log(colors.underline.white('Modified'));
 
-  let files = modifyFiles.map(f => path.resolve(__dirname, '..', f));
+  let files = modifyFiles.map(f => resolve(__dirname, '..', f));
   try {
     const changes = replace.sync({
       files,
@@ -250,8 +249,8 @@ function modifyContents(applicationName: string, username: string, usermail: str
 //     // Files[1] is the new name
 //     let newFilename = files[1].replace(/--application-name--/g, applicationName);
 //     mv(
-//       path.resolve(__dirname, '..', files[0]),
-//       path.resolve(__dirname, '..', newFilename)
+//       resolve(__dirname, '..', files[0]),
+//       resolve(__dirname, '..', newFilename)
 //     );
 //     console.log(colors.cyan(files[0] + ' => ' + newFilename));
 //   });
@@ -266,13 +265,13 @@ function finalize() {
   console.log(colors.underline.white('Finalizing'));
 
   // Recreate Git folder
-  let gitInitOutput = exec('git init "' + path.resolve(__dirname, '..') + '"', {
+  let gitInitOutput = exec('git init "' + resolve(__dirname, '..') + '"', {
     silent: true
   }).stdout;
   console.log(colors.green(gitInitOutput.replace(/(\n|\r)+/g, '')));
 
   // Remove post-install command
-  let jsonPackage = path.resolve(__dirname, '..', 'package.json');
+  let jsonPackage = resolve(__dirname, '..', 'package.json');
   const pkg = JSON.parse(readFileSync(jsonPackage) as any);
 
   // Note: Add items to remove from the package file here
