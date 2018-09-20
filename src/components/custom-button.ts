@@ -1,5 +1,4 @@
 import BaseButton from 'components/button';
-import Vue from 'vue';
 
 export default BaseButton.extend({
   methods: {
