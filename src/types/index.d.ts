@@ -8,6 +8,7 @@ type ComponentImportPromiseMap = {
   [name: string]: ComponentImportPromise
 }
 
+declare const importFactory: (type: string) => (name: string) => ComponentImportPromise;
 declare const importComponent: (name: string) => ComponentImportPromise;
 declare const importPage: (name: string) => ComponentImportPromise;
 declare const useComponents: (componentsMap: { [name: string]: string }) => ComponentImportPromiseMap;

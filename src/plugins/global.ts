@@ -1,15 +1,15 @@
-function importFactory(type: string) {
+window.importFactory = function importFactory(type: string) {
   return function (name: string) {
     return () => import(
       /* webpackChunkName: "[request]" */
       /* webpackMode: "lazy" */
-      /* webpackExclude: /.*((le|c)ss|\.html|\.pug|tsconfig\.json|\.d\.ts)$/ */
+      /* webpackExclude: /.*(\.(le|c)ss|\.html|\.ejs|\.pug|tsconfig\.json|\.svg|\.ttf|\.woff|\.d\.ts|ignore-chunk)$/ */
       '@/' + type + '/' + name);
   };
-}
+};
 
-window.importComponent = importFactory('components');
-window.importPage = importFactory('pages');
+window.importComponent = window.importFactory('components');
+window.importPage = window.importFactory('pages');
 window.useComponents = componentsMap => Object.keys(componentsMap)
   .reduce((obj, name) => ((obj[name] = importComponent(componentsMap[name])), obj), {} as ComponentImportPromiseMap);
 
