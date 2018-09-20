@@ -5,8 +5,9 @@
  */
 import * as _prompt from 'prompt';
 import * as colors from 'colors';
+/// <reference path="shelljs" />
 import { mv, rm, which, exec } from 'shelljs';
-import replace from 'replace-in-file';
+import * as replace from 'replace-in-file';
 import { basename, resolve } from 'path';
 import { readFileSync, writeFileSync } from 'fs';
 import { fork } from 'child_process';
@@ -207,7 +208,7 @@ function setupApplication(applicationName: string, repo: string) {
 
   // renameItems(applicationName);
 
-  finalize();
+  finalize(repo);
 
   console.log(colors.cyan('OK, you\'re all set. Happy coding!! ;)\n'));
 }
@@ -237,8 +238,8 @@ function modifyContents(applicationName: string, username: string, usermail: str
   try {
     const changes = replace.sync({
       files,
-      from: [/--application-name--/g, /--username--/g, /--usermail--/g],
-      to: [applicationName, username, usermail]
+      from: [/--application-name--/g, /--username--/g, /--usermail--/g, /--repo--/g],
+      to: [applicationName, username, usermail, repo]
     });
     console.log(colors.yellow(modifyFiles.join('\n')));
   } catch (error) {
@@ -271,14 +272,22 @@ function modifyContents(applicationName: string, username: string, usermail: str
 /**
  * Calls any external programs to finish setting up the application
  */
-function finalize() {
+function finalize(repo: string) {
   console.log(colors.underline.white('Finalizing'));
 
   // Recreate Git folder
   let gitInitOutput = exec('git init "' + resolve(__dirname,) + '"', {
     silent: true
   }).stdout;
-  console.log(colors.green(gitInitOutput.replace(/(\n|\r)+/g, '')));
+  console.log(colors.green((gitInitOutput.valueOf() as string).replace(/(\n|\r)+/g, '')));
+
+  // Set remote
+  if (repo) {
+    let gitRemoteOutput = exec('git remote add origin ' + repo, {
+      silent: true
+    }).stdout;
+    console.log(colors.green((gitRemoteOutput.valueOf() as string).replace(/(\n|\r)+/g, '')));
+  }
 
   // Remove post-install command
   let jsonPackage = resolve(__dirname, 'package.json');
@@ -290,6 +299,7 @@ function finalize() {
   // Remove redundant packages
   delete pkg.devDependencies.prompt;
   delete pkg.devDependencies.shelljs;
+  delete pkg.devDependencies['@types/shelljs'];
   delete pkg.devDependencies['replace-in-file'];
 
   // tslint:disable-next-line:no-magic-numbers
