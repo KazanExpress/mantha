@@ -30,7 +30,7 @@ const _promptSchemaApplicationName = {
   properties: {
     application: {
       description: colors.cyan(
-        'What do you want the application to be called? (use kebab-case)'
+        '\nWhat do you want the application to be called? (use kebab-case)'
       ),
       pattern: /^[a-z]+(\-[a-z]+)*$/,
       type: 'string',
@@ -45,11 +45,11 @@ const _promptSchemaRepoName = {
   properties: {
     repository: {
       description: colors.cyan(
-        'What shall be your remote repository? (provide https or ssh url or leave empty if not needed)'
+        '\nWhat shall be your remote repository? (provide https or ssh url or leave empty if not needed)'
       ),
-      pattern: /^((https:\/\/|git@)\w+\.\w+\/.*\.git)?$/,
+      pattern: /^(.*\.git\/?)?$/i,
       type: 'string',
-      required: true,
+      required: false,
       message:
         'provide empty string or https/ssh repository url'
     }
