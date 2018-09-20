@@ -4,9 +4,9 @@
  * Heavily inspired by https://github.com/alexjoverm/typescript-library-starter
  */
 import * as _prompt from 'prompt';
+import * as colors from 'colors';
 import { mv, rm, which, exec } from 'shelljs';
 import replace from 'replace-in-file';
-import colors from 'colors';
 import path from 'path';
 import { readFileSync, writeFileSync } from 'fs';
 import { fork } from 'child_process';
