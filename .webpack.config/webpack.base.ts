@@ -23,6 +23,16 @@ export default (mode: 'development' | 'production'): Configuration => ({
     path: resolve('./build/' + mode),
     publicPath: '/'
   },
+    stats: {
+      performance: true,
+      modules: false,
+      colors: true,
+
+      env: true,
+      excludeAssets(name) {
+        return name.includes('favicon') || name.includes('webpack-silent');
+      }
+    },
 
   resolve: {
     extensions: ['.ts', '.js', '.pug', '.less', '.json'],
