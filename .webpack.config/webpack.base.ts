@@ -138,6 +138,37 @@ export default (mode: 'development' | 'production'): Configuration => ({
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(mode),
       'process.env.ENV': JSON.stringify(mode),
-    })
+      }),
+      new webpack.NamedModulesPlugin(),
+      // TODO
+      htmlConfig.favicon ? new FaviconsWebpackPlugin({
+        title: htmlConfig.title,
+        logo: htmlConfig.favicon,
+        prefix: '../favicons/',
+        inject: true,
+        persistentCache: true,
+
+        icons: {
+          android: true,
+          appleIcon: true,
+          appleStartup: true,
+          coast: true,
+          favicons: true,
+          firefox: true,
+          opengraph: true,
+          twitter: true,
+          yandex: true,
+          windows: true
+        }
+      }) : { apply() {} },
+      new CopyWebpackPlugin([
+        {
+          from: resolve('./build/favicons'),
+          to: resolve(`./build/${mode}/favicons`)
+        }, {
+          from: resolve('./src/assets'),
+          to: resolve(`./build/${mode}/assets`)
+        }
+      ])
   ]
 });
