@@ -22,6 +22,7 @@ const rmFiles = [
   'init.ts'
 ];
 const modifyFiles = [
+  './src/.config/html/index.ts',
   'LICENSE',
   'package.json'
 ];
