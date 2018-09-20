@@ -1,4 +1,5 @@
 import 'plugins';
+
 import 'themes/default';
 
 import Vue from 'vue';
@@ -7,7 +8,7 @@ import store from 'plugins/store';
 
 const app = new Vue({
   render: h => h('router-view'),
-  el: 'app',
+  el: '#app',
   router,
   store
 });
