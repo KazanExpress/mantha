@@ -286,7 +286,7 @@ function finalize(repo: string) {
     let gitRemoteOutput = exec('git remote add origin ' + repo, {
       silent: true
     }).stdout;
-    console.log(colors.green((gitRemoteOutput.valueOf() as string).replace(/(\n|\r)+/g, '')));
+    console.log(colors.green('Set repository remote as ' + repo));
   }
 
   // Remove post-install command
