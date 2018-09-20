@@ -59,12 +59,12 @@ export default (mode: 'development' | 'production'): Configuration => {
       noParse: /.*tsconfig\.json$/,
       rules: [
         {
-          test: /\.less$/,
+          test: /\.(le|c)ss$/,
           use: ['style-loader', 'css-loader', 'less-loader'],
           exclude: [/.*src\/themes\/.*/]
         },
         {
-          test: /\.less$/,
+          test: /\.(le|c)ss$/,
           use: [
             // TODO: make file-loader work with 'style-loader/url'
             // 'file-loader',
@@ -73,8 +73,15 @@ export default (mode: 'development' | 'production'): Configuration => {
         },
         {
           test: /\.html$/,
-          loader: 'html-loader',
-          options: { minimize: true }
+          loaders: [
+            {
+              loader: 'vue-template-loader',
+              options: {
+                functional: false
+              }
+            },
+            'html-loader'
+          ],
         },
         {
           test: [/\.d\.ts$/, /tsconfig\.json/, /html\.ts/],
