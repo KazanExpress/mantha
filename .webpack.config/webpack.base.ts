@@ -2,6 +2,9 @@ import { join } from 'path';
 import { Configuration } from 'webpack';
 import * as cleanWebpackPlugin from 'clean-webpack-plugin';
 import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin/lib';
+import * as HtmlWebpackPlugin from 'html-webpack-plugin';
+import * as CopyWebpackPlugin from 'copy-webpack-plugin';
+import * as FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import * as webpack from 'webpack';
 
 function resolve(dir: string) {
