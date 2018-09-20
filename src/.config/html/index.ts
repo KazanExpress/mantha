@@ -1,5 +1,5 @@
 const common: IOptions = {
-  title: 'mantha-app',
+  title: '--application-name--',
   appMountId: 'app',
   lang: 'en',
   favicon: 'assets/favicon.svg'

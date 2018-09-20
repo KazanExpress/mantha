@@ -1,8 +1,9 @@
 {
-  "name": "mantha",
+  "name": "--application-name--",
   "version": "0.0.0",
   "description": "",
-  "main": "index.js",
+  "author": "--username-- <--usermail-->",
+  "repository": "--repo--",
   "scripts": {
     "dev": "webpack-dev-server --config .webpack.config/webpack.dev.server.ts",
     "build:all": "npm-run-parallel build build:dev build:module",
@@ -13,9 +14,9 @@
     "test": "jest",
     "test:report": "npm run test -- --verbose",
     "test:watch": "npm run test:report -- --watch",
-    "test:prod": "npm run lint && npm run test:report -- --coverage --no-cache"
+    "test:prod": "npm run lint && npm run test:report -- --coverage --no-cache",
+    "postinstall": "ts-node init"
   },
-  "author": "KazanExpress",
   "license": "MIT",
   "devDependencies": {
     "@types/clean-webpack-plugin": "^0.1.2",
@@ -48,9 +49,12 @@
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "npm-run-parallel": "^0.6.0",
+    "prompt": "^1.0.0",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "raw-loader": "^0.5.1",
+    "replace-in-file": "^3.4.2",
+    "shelljs": "^0.8.2",
     "style-loader": "^0.22.1",
     "ts-jest": "^23.1.4",
     "ts-loader": "^4.5.0",
