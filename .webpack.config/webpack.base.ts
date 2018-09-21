@@ -60,7 +60,7 @@ export default (mode: 'development' | 'production'): Configuration => {
       rules: [
         {
           test: /\.(le|c)ss$/,
-          use: ['style-loader', 'css-loader', 'less-loader'],
+          use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
           exclude: [/.*src\/themes\/.*/]
         },
         {
@@ -68,7 +68,8 @@ export default (mode: 'development' | 'production'): Configuration => {
           use: [
             // TODO: make file-loader work with 'style-loader/url'
             // 'file-loader',
-            'style-loader', 'css-loader', 'less-loader'],
+            'style-loader', 'css-loader', 'postcss-loader', 'less-loader'
+          ],
           include: [/.*src\/themes\/.*/]
         },
         {
@@ -111,6 +112,22 @@ export default (mode: 'development' | 'production'): Configuration => {
           }, {
             loader: 'pug-plain-loader'
           }]
+        },
+        {
+          test: /\.(woff(2)?|eot|ttf|otf)$/,
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            name: resolve('./build/' + mode + '/fonts/[name].[ext]')
+          }
+        },
+        {
+          test: /\.(png|jpe?g|gif|svg)$/,
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            name: resolve('./build/' + mode + '/img/[name].[ext]')
+          }
         }
       ]
     },

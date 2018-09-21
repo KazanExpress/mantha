@@ -3,7 +3,7 @@ window.importFactory = function importFactory(type: string) {
     return () => import(
       /* webpackChunkName: "[request]" */
       /* webpackMode: "lazy" */
-      /* webpackExclude: /.*(\.(le|c)ss|\.html|\.ejs|\.pug|tsconfig\.json|\.svg|\.ttf|\.woff|\.d\.ts|ignore-chunk)$/ */
+      /* webpackExclude: /.*(\.(le|c)ss|\.html|\.ejs|\.pug|tsconfig\.json|\.svg|\.ttf|\.woff2?|\.d\.ts|ignore-chunk)$/ */
       '@/' + type + '/' + name);
   };
 };
