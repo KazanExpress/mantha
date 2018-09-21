@@ -193,10 +193,10 @@ export default (mode: 'development' | 'production'): Configuration => {
       }) : { apply() {} },
       new CopyWebpackPlugin([
         {
-          from: resolve('./build/favicons'),
+          from: resolve('./build/favicons') + '/*',
           to: resolve(`./build/${mode}/favicons`)
         }, {
-          from: resolve('./src/assets'),
+          from: resolve('./src/assets') + '/*',
           to: resolve(`./build/${mode}/assets`)
         }
       ])
