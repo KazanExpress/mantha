@@ -210,13 +210,17 @@ export default (mode: 'development' | 'production'): Configuration => {
       }) : { apply() {} },
       new CopyWebpackPlugin([
         {
-          from: resolve('./build/favicons') + '/*',
-          to: resolve(`./build/${mode}/favicons`)
+          from: './build/favicons/*',
+          to: './favicons/[name].[ext]',
+          toType: 'template'
         }, {
-          from: resolve('./src/assets') + '/*',
-          to: resolve(`./build/${mode}/assets`)
+          from: './src/assets/*',
+          to: './assets/[name].[ext]',
+          toType: 'template'
         }
-      ])
+      ], {
+        debug: 'info'
+      })
     ]
   });
 };
