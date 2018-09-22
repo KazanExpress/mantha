@@ -218,9 +218,7 @@ export default (mode: 'development' | 'production'): Configuration => {
           to: './assets/[name].[ext]',
           toType: 'template'
         }
-      ], {
-        debug: 'info'
-      })
+      ])
     ]
   });
 };
