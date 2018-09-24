@@ -1,11 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import * as modules from '@/store';
-import plugins from './plugins';
+import plugins from '@/store/plugins';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   modules,
   plugins
 });
+
+export default store;

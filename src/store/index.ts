@@ -1,5 +1,7 @@
-export * from './test';
+export * from './modules';
 
 export interface IRootState {
-  test: import('./test').TestState;
+  test: import('./modules').TestState;
+
+  // Add your module types in there
 }

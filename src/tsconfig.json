@@ -7,6 +7,7 @@
       "pages/*": ["./pages/*"],
       "themes/*": ["./themes/*"],
       "plugins/*": ["./plugins/*"],
+      "store/*": ["./store/*"],
       "config/*": ["./.config/*"]
     },
     "target": "es5",
