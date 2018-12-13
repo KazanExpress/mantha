@@ -1,4 +1,5 @@
 import render from './view';
-import Vue from 'vue';
 
-export default render(Vue);
+export default render(Mantha.Page.extend({
+  name: 'Page404'
+}));

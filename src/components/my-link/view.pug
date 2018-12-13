@@ -1,0 +1,5 @@
+router-link.link(:to="to" v-if="isInternal")
+  slot
+a.link(:href="to" v-else)
+  slot
+

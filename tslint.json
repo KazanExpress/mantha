@@ -25,7 +25,6 @@
     "no-unbound-method": { "severity": "warning" },
     "no-unnecessary-callback-wrapper": { "severity": "warning" },
     "no-unsafe-finally": true,
-    "no-var-requires": true,
     "number-literal-format": true,
     // "prefer-function-over-method": { "severity": "warning" },
     "prefer-object-spread": true,

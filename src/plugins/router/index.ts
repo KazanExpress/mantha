@@ -1,7 +1,8 @@
-import Vue from 'vue';
 import Router from 'vue-router';
 import { guard, options } from './config';
 
-Vue.use(Router);
+export default function (Vue: typeof import('vue').default) {
+  Vue.use(Router);
 
-export default guard(new Router(options));
+  return guard(new Router(options));
+}

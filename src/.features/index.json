@@ -1,0 +1,11 @@
+{
+  "multi_level_inheritance": {
+    "enabled": true,
+    "description": "Enables multi-level inheritance",
+
+    "advanced_inheritance": {
+      "enabled": true,
+      "description": "Enables advanced multi-level inheritance using the $super property in vue components"
+    }
+  }
+}

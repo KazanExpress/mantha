@@ -2,17 +2,20 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./*"],
-      "views/*": ["./views/*"],
+      "~/*": ["./assets/*"],
       "components/*": ["./components/*"],
       "pages/*": ["./pages/*"],
+      "mixins/*": ["./mixins/*"],
       "themes/*": ["./themes/*"],
       "plugins/*": ["./plugins/*"],
-      "store/*": ["./store/*"],
-      "config/*": ["./.config/*"]
+      "media/*": ["./plugins/mixins/mantha-media/*"],
+      "config/*": ["./.config/*"],
+      "text": ["./.text/index"]
     },
     "target": "es5",
     "moduleResolution": "node",
     "module": "esnext",
+    "resolveJsonModule": true,
     "outDir": "../build",
     "allowJs": true,
     "sourceMap": true,

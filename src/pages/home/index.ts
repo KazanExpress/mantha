@@ -1,26 +1,15 @@
 import './styles';
 import render from './view';
+import * as messages from './.locales';
+import layoutable from 'plugins/mixins/layoutable';
 
-import Vue from 'vue';
-
-export default render(Vue.withRefs<{
-  counter: typeof import('components/counter').default;
+export default render(Mantha.Page.withRefs<{
+  myLink: typeof import('components/my-link');
 }>().extend({
   name: 'home',
-  components: useComponents({
-    KeButton: 'custom-button',
-    JustButton: 'button',
-    KeCounter: 'counter'
-  }),
-  methods: {
-    buttonClickInc () {
-      this.$refs.counter.increment();
-    },
-    buttonClickDec () {
-      this.$refs.counter.decrement();
-    },
-    otherButtonClick () {
-      console.log('let it be mate');
-    }
-  },
+  mixins: [layoutable],
+  components: use([
+    'my-link'
+  ]),
+  i18n: { messages },
 }));

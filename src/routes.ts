@@ -1,12 +1,13 @@
-const component = { render: h => h('router-view'), name: '-' };
+const component = { render: h => h('router-view'), name: 'Nested' };
 
 export const routes = {
   '/': {
-    name: 'root',
-    redirect: 'home',
     component,
     children: {
-      'home': importPage('home')
+      '': {
+        name: 'home',
+        component: importPage('home'),
+      }
     }
   },
   '*': importPage('404')

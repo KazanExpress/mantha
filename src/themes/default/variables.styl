@@ -1,0 +1,10 @@
+remlessSizes = json('../../plugins/mixins/mantha-media/sizes.json', { hash: true });
+
+$sizes = {
+  all: remlessSizes.sizes.all
+  xs: unit(remlessSizes.sizes.xs, remlessSizes.unit)
+  sm: unit(remlessSizes.sizes.sm, remlessSizes.unit)
+  md: unit(remlessSizes.sizes.md, remlessSizes.unit)
+  lg: unit(remlessSizes.sizes.lg, remlessSizes.unit)
+  xl: unit(remlessSizes.sizes.xl, remlessSizes.unit)
+};

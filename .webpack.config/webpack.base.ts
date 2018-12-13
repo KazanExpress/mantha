@@ -1,14 +1,16 @@
 import { join } from 'path';
-import { existsSync } from 'fs';
+import { existsSync, mkdirSync } from 'fs';
 import { Configuration } from 'webpack';
+import * as MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import * as cleanWebpackPlugin from 'clean-webpack-plugin';
 import * as ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin/lib';
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 import * as CopyWebpackPlugin from 'copy-webpack-plugin';
-import * as FaviconsWebpackPlugin from 'favicons-webpack-plugin';
+
 import * as webpack from 'webpack';
 
-import htmlConfigFactory from '../src/.config/html';
+import htmlConfigFactory from '../src/.config/build/html';
+import chunkSplitPatterns from '../src/.config/build/chunk';
 
 function resolve(dir: string) {
   return join(__dirname, '..', dir);
@@ -27,7 +29,17 @@ export default (mode: 'development' | 'production'): Configuration => {
   const htmlConfig = htmlConfigFactory(mode);
   htmlConfig.favicon && (htmlConfig.favicon = resolve('./src/' + htmlConfig.favicon));
 
-  const iconsExist = existsSync(resolve('./build/favicons'));
+  const buildExist = existsSync(resolve('./build'));
+
+  if (!buildExist) {
+    mkdirSync(resolve('./build'));
+  }
+
+  const faviconsExist = existsSync(resolve('./build/favicons'));
+
+  if (!faviconsExist) {
+    mkdirSync(resolve('./build/favicons'));
+  }
 
   return ({
     mode,
@@ -36,18 +48,28 @@ export default (mode: 'development' | 'production'): Configuration => {
       publicPath: '/'
     },
     stats: {
+      cachedAssets: false,
       performance: true,
       modules: false,
       colors: true,
 
       env: true,
+      version: false,
+      children: false,
+      chunkOrigins: true,
+      chunksSort: 'size',
+      assetsSort: 'size',
+      modulesSort: 'size',
+
       excludeAssets(name) {
-        return name.includes('favicon') || name.includes('webpack-silent');
+        const excludeFromLogs = [/assets/, /static/, /favicon/, /webpack-silent/];
+
+        return excludeFromLogs.some(r => r.test(name));
       }
     },
 
     resolve: {
-      extensions: ['.ts', '.js', '.pug', '.less', '.json'],
+      extensions: ['.ts', '.js', '.pug', '.css', '.styl', '.json'],
       alias: {
         ...paths,
 
@@ -59,38 +81,82 @@ export default (mode: 'development' | 'production'): Configuration => {
       noParse: /.*tsconfig\.json$/,
       rules: [
         {
-          test: /\.(le|c)ss$/,
-          use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
+          test: /\.styl$/,
+          use: [
+            (mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader'),
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: mode === 'development',
+                minimize: mode === 'production'
+              } as any
+            }, {
+              loader: 'postcss-loader',
+              options: {
+                ident: 'postcss',
+                plugins: [
+                  require('autoprefixer')
+                ]
+              }
+            }, 'stylus-loader'
+          ],
           exclude: [/.*src\/themes\/.*/]
         },
         {
-          test: /\.(le|c)ss$/,
+          test: /\.styl$/,
           use: [
-            // TODO: make file-loader work with 'style-loader/url'
-            // 'file-loader',
-            'style-loader', 'css-loader', 'postcss-loader', 'less-loader'
+            (mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader'),
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: mode === 'development',
+                minimize: mode === 'production'
+              } as any
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                ident: 'postcss',
+                plugins: [
+                  require('autoprefixer')
+                ]
+              }
+            }, 'stylus-loader'
           ],
-          include: [/.*src\/themes\/.*/]
+          include: [/.*src\/themes\/.*/, /node_modules/],
+          exclude: [/.*src\/components.*/, /.*src\/pages.*/]
         },
         {
-          test: /\.html$/,
-          loaders: [
+          test: /\.css$/,
+          use: [
+            (mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader'),
             {
-              loader: 'vue-template-loader',
+              loader: 'css-loader',
               options: {
-                functional: false
+                sourceMap: mode === 'development',
+                minimize: mode === 'production'
+              } as any
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                ident: 'postcss',
+                plugins: [
+                  require('autoprefixer')
+                ]
               }
             },
-            'html-loader'
           ],
+          include: [/.*src\/themes\/.*/, /node_modules/],
+          exclude: [/.*src\/components.*/, /.*src\/pages.*/]
         },
         {
-          test: [/\.d\.ts$/, /tsconfig\.json/, /html\.ts/],
+          test: [/\.d\.ts$/, /tsconfig.*\.json$/],
           loader: 'ignore-loader'
         },
         {
           test: /\.ts$/,
-          exclude: [/(node_modules)|(\.d\.ts)/],
+          exclude: [/(\.d\.ts)/],
           loader: 'ts-loader',
           options: {
             configFile: resolve('./src/tsconfig.json'),
@@ -107,27 +173,32 @@ export default (mode: 'development' | 'production'): Configuration => {
           loaders: [{
             loader: 'vue-template-loader',
             options: {
-              functional: false
+              functional: false,
+              transformAssetUrls: {
+                img: 'src'
+              }
             }
           }, {
             loader: 'pug-plain-loader'
           }]
         },
         {
-          test: /\.(woff(2)?|eot|ttf|otf)$/,
-          loader: 'url-loader',
+          test: /\.(woff(2)?|eot|ttf|otf|)$/,
+          loader: 'file-loader',
           options: {
-            limit: 10000,
-            name: resolve('./build/' + mode + '/fonts/[name].[ext]')
+            name: 'static/[name].[ext]'
           }
         },
         {
           test: /\.(png|jpe?g|gif|svg)$/,
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            name: resolve('./build/' + mode + '/img/[name].[ext]')
-          }
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: 'static/[name].[ext]'
+              }
+            }
+          ]
         }
       ]
     },
@@ -140,6 +211,8 @@ export default (mode: 'development' | 'production'): Configuration => {
       runtimeChunk: {
         name: 'async-importer'
       },
+      nodeEnv: mode,
+      namedChunks: true,
       splitChunks: {
         maxInitialRequests: 20,
         maxAsyncRequests: 20,
@@ -148,10 +221,11 @@ export default (mode: 'development' | 'production'): Configuration => {
             test: /node_modules/,
             chunks: 'all',
             enforce: true,
-            reuseExistingChunk: true
+            reuseExistingChunk: true,
+            name: true
           },
           main: {
-            test: /.*src(\/|\\)(pages|components)(\/|\\).*/,
+            test: chunk => (chunkSplitPatterns.every(p => !p.test(chunk.userRequest) && !p.test(chunk._chunks.values().next().value.name))),
             chunks: 'all',
             enforce: true,
             reuseExistingChunk: true,
@@ -164,11 +238,18 @@ export default (mode: 'development' | 'production'): Configuration => {
     parallelism: 8,
 
     plugins: [
+      new MiniCssExtractPlugin({
+        filename: mode === 'development' ? '[name].css' : '[name].[contenthash].css',
+        chunkFilename: mode === 'development' ? '[name].css' : '[name].[contenthash].css',
+      }),
       new HtmlWebpackPlugin({
+        ...htmlConfig,
         template: require('html-webpack-template'),
         inject: false,
+        favicon: htmlConfig.favicon,
+        title: htmlConfig.title,
+        meta: htmlConfig.meta,
         env: { NODE_ENV: mode, ENV: mode },
-        ...htmlConfig,
         minify: mode === 'production' ? {
           removeComments: true,
           collapseWhitespace: true,
@@ -187,38 +268,15 @@ export default (mode: 'development' | 'production'): Configuration => {
         'process.env.ENV': JSON.stringify(mode),
       }),
       new webpack.NamedModulesPlugin(),
-      // TODO
-      htmlConfig.favicon ? new FaviconsWebpackPlugin({
-        title: htmlConfig.title,
-        logo: htmlConfig.favicon,
-        prefix: '../favicons/',
-        inject: true,
-        persistentCache: true,
 
-        icons: {
-          android: true,
-          appleIcon: true,
-          appleStartup: true,
-          coast: true,
-          favicons: true,
-          firefox: true,
-          opengraph: true,
-          twitter: true,
-          yandex: true,
-          windows: true
-        }
-      }) : { apply() {} },
       new CopyWebpackPlugin([
         {
-          from: './build/favicons/*',
-          to: './favicons/[name].[ext]',
-          toType: 'template'
-        }, {
-          from: './src/assets/*',
-          to: './assets/[name].[ext]',
-          toType: 'template'
+          from: './build/favicons',
+          to: './favicons'
         }
       ])
-    ]
+    ],
+
+    node: { __dirname: true }
   });
 };

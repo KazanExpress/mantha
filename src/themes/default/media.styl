@@ -1,0 +1,18 @@
+@require '~small-flexgrid/src/mixins';
+@require 'variables';
+
+  // Media queries for this theme
+
++media($sizes.sm, $sizes.lg)
+  html, body
+    font-size: 20px;
+
++media($sizes.all, $sizes.sm)
+  html, body
+    font-size: 16px;
+  .row.fix-margin
+    margin-left -4px
+    margin-right -4px
+
+cols-with-helpers(12, $sizes, '')
+cols(5, $sizes)
