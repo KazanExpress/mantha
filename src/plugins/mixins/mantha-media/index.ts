@@ -10,7 +10,7 @@ export function remToPixels(rem) {
   );
 }
 
-export default (Vue: typeof import('vue').default) => Vue.emitsEvents<{
+export default (Vue: typeof import('vue').default) => Vue.emits<{
   'media-changed': [];
   'media-init': [];
 }>().extend({
