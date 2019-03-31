@@ -26,7 +26,7 @@ No unnecessary webpack or loader configurations needed.
 - Almost zero-setup. After `npm i` things will be set up for you 👌
 - Webpack 4 with full-typescript configuration and...
   - Proper code splitting and async components
-  - Fully-configurable output html at `./src/.config/html`
+  - Fully-configurable output html at `./src/.config/build/html`
   - Path aliases dynamically loaded from your `tsconfig.json` so you won't forget to change them
   - Automated favicons for all possible devices
   - Sourcemaps
