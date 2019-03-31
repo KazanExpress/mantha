@@ -17,8 +17,8 @@ npm-debug.log
 yarn-error.log
 
 node_modules
-coverage
-compiled
-build
+/coverage
+/compiled
+/build
 .awcache
 .rpt2_cache
