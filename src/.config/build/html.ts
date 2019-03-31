@@ -2,6 +2,7 @@ const common: IOptions = {
   title: 'Mantha project',
   appMountId: 'app',
   lang: 'en',
+  favicon: 'assets/favicon.ico',
   meta: [
     {
       name: 'viewport',
