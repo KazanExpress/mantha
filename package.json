@@ -15,7 +15,8 @@
     "test": "jest",
     "test:report": "npm run test -- --verbose",
     "test:watch": "npm run test:report -- --watch",
-    "test:prod": "npm run lint && npm run test:report -- --coverage --no-cache"
+    "test:prod": "npm run lint && npm run test:report -- --coverage --no-cache",
+    "postinstall": "ts-node init"
   },
   "devDependencies": {
     "@types/clean-webpack-plugin": "^0.1.2",
@@ -55,10 +56,13 @@
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
     "preload-webpack-plugin": "^3.0.0-beta.2",
+    "prompt": "^1.0.0",
     "pug": "^2.0.3",
     "pug-html-loader": "^1.1.5",
     "pug-plain-loader": "^1.0.0",
     "raw-loader": "^0.5.1",
+    "replace-in-file": "^3.4.4",
+    "shelljs": "^0.8.3",
     "style-loader": "^0.22.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
