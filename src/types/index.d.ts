@@ -24,11 +24,11 @@ type ComponentImportPromiseMap = {
   [name: string]: ComponentImportPromise;
 };
 
-declare const importFactory: (type: string, typeStyle?: string) => (name: string, relativePath?: string) => ComponentImportPromise;
-declare const importComponent: (name: string, relativePath?: string) => ComponentImportPromise;
-declare const importPage: (name: string, relativePath?: string) => ComponentImportPromise;
-declare const use: UseComponentsFunction;
-declare const useLayouts: (componentsMap: ComponentImportMap) => ComponentImportPromiseMap;
+declare const importFactory: (type: string, typeStyle?: string) => (name: string, relativePath?: string) => import('async-usage/src/types').ChunkImportPromise;
+declare const importComponent: (name: string, relativePath?: string) => import('async-usage/src/types').ChunkImportPromise;
+declare const importPage: (name: string, relativePath?: string) => import('async-usage/src/types').ChunkImportPromise;
+declare const use: import('async-usage/src').ChunksUse;
+declare const useLayouts: (componentsMap: import('async-usage/src/types').ChunkImportMap) => import('async-usage/src/types').ChunkImportPromiseMap;
 declare const features: typeof import('@/.features').default;
 declare const env: String & {
   isDevelopment: boolean
