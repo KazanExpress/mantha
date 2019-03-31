@@ -1,7 +1,9 @@
 import features from '@/.features';
-import { importFactory, use, importComponent, importPage } from './imports';
+import { use, importComponent, importPage } from './imports';
+import { throws } from './throws';
 
-window.importFactory = importFactory;
+window.throws = throws;
+
 window.use = use;
 window.importComponent = importComponent;
 window.importPage = importPage;
