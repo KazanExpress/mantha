@@ -33,7 +33,7 @@ No unnecessary webpack or loader configurations needed.
 - Fully set-up testing, reporting and coverage with `Jest`
 - TS-Lint by typescript giudelines
 - [Component import shorthands](#component-import-shorthands)
-- Pug & Less support
+- Pug & Stylus support
 - Fully configurable plugins
 - Zero-configuration vuex store and vue router
 - ES6-compilant build with dynamically-loaded polyfills (coming soon)
@@ -60,32 +60,39 @@ Here's how the basic outline of the project's structure looks like:
 
 ```bash
 root
-├───.webpack.config # Here go several pre-set webpack configs for the app
+├───.webpack.config   # Here go several pre-set webpack configs for the app
 │
-├───build           # Built and compiled code and favicons
+├───build             # Built and compiled code and favicons
 │   │
-│   ├───favicons    # Generated favicons lie here
+│   ├───favicons      # Generated favicons lie here
 │   │
-│   ├───development # Development build with source-maps
-│   └───production  # Production minified build
+│   ├───development   # Development build with source-maps
+│   └───production    # Production minified build
 │
-├───src             # The only directory you'll have to open during development
+├───src               # The only directory you'll have to open during development
 │   │
-│   ├───.config     # A global config folder for your app. Put there every setting you want to make global
-│   │   └───html    # HTML-file config
+│   ├───.config       # A global config folder for your app. Put there every setting you want to make global
+│   │   └───build
+│   │       ├───html  # HTML-file config
+│   │       └───chunk # chunk config
 │   │
-│   ├───assets      # Any assets you want to incorporate should go here
-│   ├───components  # All the simple pure components go here
-│   ├───pages       # Components that represent app pages go here
-│   ├───plugins     # All miscellanious stuff
+│   ├───.features     # Here goes your features configuration
+│   ├───.text         # Here go your localizations
 │   │
-│   ├───store       # Here are your store modules
+│   ├───assets        # Any assets you want to incorporate should go here
+│   ├───components    # All the simple pure components go here
+│   ├───pages         # Components that represent app pages go here
+│   ├───plugins       # All miscellanious stuff
 │   │
-│   ├───themes      # Here you can put various style themes of your app in .less or .css
+│   ├───store         # Here are your store modules
+│   │
+│   ├───themes        # Here you can put various style themes of your app in .less or .css
 │   │   └───[theme-name]
 │   │
-│   └───types       # Standard global types are here
-│       └───index.d.ts
+│   ├───types         # Standard global types are here
+│   │   └───index.d.ts
+│   │
+│   └───routes.ts     # Here are your routes
 │
 └───test  # Put your tests here
 ```
