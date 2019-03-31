@@ -1,13 +1,13 @@
 import global from './global';
 import storePlugin from './store';
 import routerPlugin from './router';
-import goodRefsPlugin from './advancedInheritance';
+import vuePlugins from './vue-plugins';
 import manthaMediaMixin from './mixins/mantha-media';
 import i18nPlugin from './i18n';
 import directives from './directives';
 
 export default function (Vue: typeof import('vue').default, options: IPluginsOptions) {
-  Vue.use(goodRefsPlugin);
+  Vue.use(vuePlugins);
   Vue.use(global);
   Vue.use(directives);
 
@@ -29,14 +29,13 @@ export default function (Vue: typeof import('vue').default, options: IPluginsOpt
   const MediaMixin = manthaMediaMixin(Vue);
   const i18n = i18nPlugin(Vue);
 
-  const VueSama = MediaMixin.extend({
+  const ManthaVue = MediaMixin.extend({
     store,
     router,
-    i18n: i18n(options.defaultLocale),
-
+    i18n: i18n(options.defaultLocale)
   });
 
-  return VueSama;
+  return ManthaVue;
 }
 
 interface IPluginsOptions {
