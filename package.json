@@ -89,7 +89,7 @@
     "small-flexgrid": "^2.2.3",
     "vue": "^2.5.17",
     "vue-i18n": "^8.10.0",
-    "vue-router": "^3.0.1",
+    "vue-router": "^3.5.4",
     "vuex": "^3.0.1"
   },
   "babel": {
