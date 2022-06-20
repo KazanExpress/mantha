@@ -85,7 +85,7 @@
     "async-usage": "^1.0.2",
     "kefetchup": "^1.0.4",
     "normalize.css": "^8.0.0",
-    "parakeet-mapper": "^1.0.2",
+    "parakeet-mapper": "^1.2.2",
     "small-flexgrid": "^2.2.3",
     "vue": "^2.5.17",
     "vue-i18n": "^8.10.0",
